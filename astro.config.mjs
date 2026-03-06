@@ -6,6 +6,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://jaweyxu-xjw.github.io/knot-claw-story/',
 	integrations: [mdx() /* , sitemap() */],
+	lang: 'zh-CN',
 });
