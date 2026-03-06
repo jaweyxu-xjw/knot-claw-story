@@ -9,9 +9,25 @@ const blog = defineCollection({
 		z.object({
 			title: z.string(),
 			description: z.string(),
-			// Transform string to Date object
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
+			// Force transform to ensure Date object
+			pubDate: z.string()
+			  .transform(str => {
+				const date = new Date(str);
+				if (isNaN(date.getTime())) {
+				  throw new Error(`Invalid pubDate: ${str}`);
+				}
+				return date;
+			  })
+			  .default(() => new Date()), // 保证一定有值
+			updatedDate: z.string()
+			  .transform(str => {
+				const date = new Date(str);
+				if (isNaN(date.getTime())) {
+				  throw new Error(`Invalid updatedDate: ${str}`);
+				}
+				return date;
+			  })
+			  .optional(),
 			heroImage: image().optional(),
 		}),
 });

@@ -9,6 +9,9 @@ import Header from '../components/Header.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+const safePubDate = pubDate instanceof Date ? pubDate : new Date();
+const safeUpdatedDate = updatedDate instanceof Date ? updatedDate : (updatedDate ? new Date(updatedDate) : null);
 ---
 
 <html lang="en">
@@ -65,11 +68,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<div class="prose">
 					<div class="title">
 						<div class="date">
-							<FormattedDate date={pubDate} />
+							<FormattedDate date={safePubDate} />
 							{
-								updatedDate && (
+								safeUpdatedDate && (
 									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
+										Last updated on <FormattedDate date={safeUpdatedDate} />
 									</div>
 								)
 							}
